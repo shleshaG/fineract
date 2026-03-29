@@ -16,12 +16,9 @@
  * specific language governing permissions and limitations
  * under the License.
  */
-
 package org.apache.fineract.infrastructure.core.service;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNull;
-import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.*;
 
 import java.math.BigDecimal;
 import java.math.MathContext;
@@ -65,8 +62,18 @@ class MathUtilTest {
     }
 
     @Test
+    void isGreaterThanZeroReturnsFalseForZero() {
+        assertFalse(MathUtil.isGreaterThanZero(0L));
+    }
+
+    @Test
     void isLessThanZeroReturnsTrueForNegative() {
         assertTrue(MathUtil.isLessThanZero(-5L));
+    }
+
+    @Test
+    void isLessThanZeroReturnsFalseForPositive() {
+        assertFalse(MathUtil.isLessThanZero(5L));
     }
 
     @Test
@@ -91,25 +98,41 @@ class MathUtilTest {
 
     @Test
     void bigDecimalAddReturnsCorrectSum() {
-        BigDecimal result = MathUtil.add(new BigDecimal("10.5"), new BigDecimal("5.5"), new MathContext(10));
+        BigDecimal result = MathUtil.add(
+            new BigDecimal("10.5"),
+            new BigDecimal("5.5"),
+            new MathContext(10)
+        );
         assertEquals(0, result.compareTo(new BigDecimal("16.0")));
     }
 
     @Test
     void bigDecimalSubtractReturnsCorrectDifference() {
-        BigDecimal result = MathUtil.subtract(new BigDecimal("20"), new BigDecimal("5"), new MathContext(10));
+        BigDecimal result = MathUtil.subtract(
+            new BigDecimal("20"),
+            new BigDecimal("5"),
+            new MathContext(10)
+        );
         assertEquals(0, result.compareTo(new BigDecimal("15")));
     }
 
     @Test
     void percentageOfCalculatesCorrectValue() {
-        BigDecimal result = MathUtil.percentageOf(new BigDecimal("200"), new BigDecimal("10"), new MathContext(10));
+        BigDecimal result = MathUtil.percentageOf(
+            new BigDecimal("200"),
+            new BigDecimal("10"),
+            new MathContext(10)
+        );
         assertEquals(0, result.compareTo(new BigDecimal("20")));
     }
 
     @Test
     void percentageOfReturnsZeroWhenValueZero() {
-        BigDecimal result = MathUtil.percentageOf(BigDecimal.ZERO, new BigDecimal("10"), new MathContext(10));
+        BigDecimal result = MathUtil.percentageOf(
+            BigDecimal.ZERO,
+            new BigDecimal("10"),
+            new MathContext(10)
+        );
         assertEquals(0, result.compareTo(BigDecimal.ZERO));
     }
 
